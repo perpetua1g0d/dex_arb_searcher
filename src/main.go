@@ -1,10 +1,4 @@
-/*
-
-* / wbnb
-buy * for bnb on dex1
-sell * for bnb on dex2
-
-*/
+// @author: @perpetualgod
 
 package main
 
@@ -21,8 +15,8 @@ import (
 )
 
 type PairData struct {
-	DexId       string `json:"dexId"`
-	PriceNative string `json:"priceNative"`
+	DexId       string
+	PriceNative float64
 	Liq         float64
 }
 
@@ -49,41 +43,39 @@ func updPairs() {
 		log.Fatal(err)
 	}
 
-	var prices []float64
-	// prices := []float64{}
+	var parsedPairs []PairData
 
 	var parsed map[string]any
 	json.Unmarshal([]byte(resRawData), &parsed)
-	pairsParsed := parsed["pairs"].([]any)
-	for _, value := range pairsParsed {
-		marshalled, err := json.Marshal(value.(map[string]any))
-		if err != nil {
-			log.Fatal(err)
-		}
+	pairsMapArray := parsed["pairs"].([]any)
+	for _, value := range pairsMapArray {
+		curMap := value.(map[string]any)
 		pairData := &PairData{}
-		if err := json.Unmarshal(marshalled, &pairData); err != nil {
-			log.Fatal(err)
-		}
-		w := value.(map[string]any)
 
-		pairData.Liq = w["liquidity"].(map[string]any)["usd"].(float64)
-		fmt.Println(pairData)
-		if price, err := strconv.ParseFloat(pairData.PriceNative, 64); err == nil {
-			prices = append(prices, price)
-		} else {
+		pairData.DexId = curMap["dexId"].(string)
+		pairData.Liq = curMap["liquidity"].(map[string]any)["usd"].(float64)
+		if pairData.PriceNative, err = strconv.ParseFloat(curMap["priceNative"].(string), 64); err != nil {
 			log.Fatal(err)
 		}
+
+		parsedPairs = append(parsedPairs, *pairData)
 	}
 
-	sort.Float64s(prices)
-	fmt.Println("spread is ", (prices[len(prices)-1]/prices[0]-1)*100, "%")
+	sort.Slice(parsedPairs, func(i int, j int) bool {
+		return parsedPairs[i].PriceNative < parsedPairs[j].PriceNative
+	})
 
 	dt := time.Now()
-	fmt.Println(dt.Format("15:04:05"))
+	fmt.Printf("time: %s\n", dt.Format("15:04:05"))
+
+	fmt.Println(parsedPairs)
+	spread := (parsedPairs[len(parsedPairs)-1].PriceNative/parsedPairs[0].PriceNative - 1) * 100
+	fmt.Printf("spread: %.2f%%, path: %s->%s\n", spread, parsedPairs[0].DexId, parsedPairs[len(parsedPairs)-1].DexId)
 }
 
 func heartBeat() {
-	for range time.Tick(time.Second * 30) {
+	updRate := 30
+	for range time.Tick(time.Second * time.Duration(updRate)) {
 		updPairs()
 	}
 }
