@@ -1,0 +1,39 @@
+amm dexes: Uniswap, Curve, Balancer, Bancor, TerraSwap and Raydium. Serum?
+
+CowSwap, solvers?
+
+dexes on bsc: PancakeSwap, MDEX, BakerySwap, JulSwap, ApeSwap
+
+top dex's randked by 24h volume: https://www.coingecko.com/en/exchanges/decentralized
+
+pancakeswap(v3) pairs: https://pancakeswap.finance/info/v3/pairs
+
+get pair addresses on different dex's (dexscreener): https://api.dexscreener.com/latest/dex/search?q=LVL%20WBNB
+docs: https://docs.dexscreener.com/api/reference 
+
+python script that parsers uniswap(v2) pairs: https://github.com/jab416171/uniswap-pairtokens/tree/master; contract itself: https://etherscan.io/address/0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f#readContract
+
+tokenlists(eth): https://tokenlists.org
+
+node providers:
+infura: https://docs.infura.io/networks/bnb-smart-chain, https://app.infura.io/dashboard/ethereum/2554b87d4a874952ae9ce3dcdc9b5fb4/settings/endpoints
+moralis: https://moralis.io
+
+how to get ABI using ethscan (example): https://api.etherscan.io/api?module=contract&action=getabi&address=0xcbcdf9626bc03e24f779434178a73a0b4bad62ed&apikey=9BMUIJV6NTUFA39I6UEMHAAYD346GFNFFS
+
+arcticles:
+* https://noxx.substack.com/p/dex-arbitrage-mathematical-optimisations?utm_source=%2Fprofile%2F80455042-noxx&utm_medium=reader2
+* https://arxiv.org/pdf/2105.02784.pdf
+* Flash Boys 2.0: Frontrunning, Transaction Reordering, and Consensus Instability in Decentralized Exchanges
+
+python tutorials & scripts about pair price, listening pair updates and more: https://web3-ethereum-defi.readthedocs.io/tutorials/index.html
+
+uniswap3 book with code snippets: https://uniswapv3book.com
+
+private txs: https://docs.bloxroute.com/apis/sending-transactions/semi-private-transaction
+
+flashswap: https://medium.com/buildbear/flash-swap-5bcdbd9aaa14#:~:text=Flash%20swap%20allows%20you%20to,fee%20in%20the%20same%20transaction.
+
+suggestions to be more competitive: https://github.com/paco0x/amm-arbitrageur#any-suggestions-to-be-competitive
+
+smart contract obfuscation: https://degatchi.com/articles/smart-contract-obfuscation
